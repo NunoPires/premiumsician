@@ -1,32 +1,48 @@
 import React, { Component } from 'react';
+import Tone from 'tone';
 
 export class InstrumentKey extends Component {
 
 	constructor(...props) {
 		super(...props);
-
 		//create a synth and connect it to the master output (your speakers)
-		let synth = this.props.instrument.toMaster();
-		this.state = {instrument: synth}	
+		let synth = new Tone.PolySynth(4, this.props.instrument); 
+		synth.toMaster();
+		this.state = {instrument: synth, pressed: false};	
 	}
 
 	componentWillReceiveProps(nextProps) {
 		
-		this.setState({instrument: nextProps.instrument.toMaster()});
+		// TODO trigger attack release is not working properly after instrument change
+		let synth = new Tone.PolySynth(4, nextProps.instrument); 
+		synth.toMaster();
+		this.setState({instrument: synth});
 	}
 
 	onKeyPress() {
 		
 		//play note for the duration of an 8th note
-		this.state.instrument.triggerAttackRelease(this.props.note, "8n");	
+		this.state.instrument.triggerAttackRelease(this.props.note, "8n");
+		this.props.onKeyPress(this.props.noteIndex, this.props.note);
+
+		if(this.state.pressed) {
+			this.setState({pressed: false});
+		}
+		else {
+			this.setState({pressed: true});
+		}	
 	}
 
 	render() {
 
 		let noteLabel = this.props.note;
+		let className = "btn btn-default width-100 height-100";
+		if(this.state.pressed) {
+			className += " key-pressed";
+		}
 		return (
 			<div className="key">
-				<div className="btn btn-default width-100 height-100" onClick={this.onKeyPress.bind(this)}>
+				<div className={className} onClick={this.onKeyPress.bind(this)}>
 					{noteLabel}
 				</div>
 			</div>

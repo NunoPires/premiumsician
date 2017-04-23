@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {MainLayout} from './components/layout.js'
+import {MainLayoutContainer} from './components/layout-container.js'
 
 class App extends Component {
   render() {
@@ -11,7 +11,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to Premiumsician, powered by React</h2>
         </div>
-        <MainLayout />
+        <MainLayoutContainer />
       </div>
     );
   }

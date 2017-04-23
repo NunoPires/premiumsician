@@ -1,32 +1,25 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import Tone from 'tone';
 import 'react-select/dist/react-select.css';
-
+	
 export class InstrumentSelector extends Component
 {
-	constructor(...args) {
-		super();
-		this.state = {value: null};
-	}
-
-	onSelect(value) {
-		this.setState({'value': value});
-		this.props.onChange(value);	
+	onSelect(instrument) {
+		this.props.onSelect(instrument);
 	}
 
 	render() {
-
+		
 		let options = [
-		    { value: Tone.MembraneSynth, label: 'Piano' },
-		    { value: Tone.MonoSynth, label: 'Guitar' },
-		    { value: Tone.PluckSynth, label: 'Drums' }
+		    { value: 'piano', label: 'Piano' },
+		    { value: 'guitar', label: 'Guitar' },
+		    { value: 'drums', label: 'Drums' }
 		];
 
 		let placeholder = 'Select an option';
 		return (
 			<div className="content-wrapper">
-				<Select options={options} value={this.state.value} onChange={this.onSelect.bind(this)} placeHolder={placeholder} clearable={false} />
+				<Select options={options} value={this.props.instrument} onChange={this.onSelect.bind(this)} placeHolder={placeholder} clearable={false} />
 			</div>
 		);
 	}
