@@ -2,26 +2,50 @@ import React, { Component } from 'react';
 import _ from 'underscore';
 import {InstrumentKeyContainer} from './instrument-key-container.js';
 
-/**
- * https://github.com/Tonejs/Tone.js
-**/
 export class Instrument extends Component {
 
-	render() {
+	constructor() {
+		super();
 		
-		/*let notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'
-					,'C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5'
-					,'C6', 'D6', 'E6', 'F6', 'G6', 'A6', 'B6'];*/
+		let notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
+		// TODO audio stops working if this value increases
+		let maxCompass = 2;
+		let compassTime = 4; // 4/4		
+		this.state = {notes: notes, maxCompass: maxCompass, compassTime: compassTime};
+	}
 
-		let notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];		
-		let keys = _.map(notes, (note, idx) => {
-			return (<InstrumentKeyContainer key={idx} noteIndex={idx} track={this.props.trackIndex} instrument={this.props.instrument} note={note}/>);
-		});	
+	render() {
+
+		let keyIdx = 0;
+		let noteTracks = _.map(this.state.notes, (note, idx) => {
+			
+			let keys = [];
+			for (let i = 1; i <= this.state.maxCompass; i++) {
+				for(let j = 1; j <= this.state.compassTime; j++) {
+					keys.push(<InstrumentKeyContainer key={keyIdx} noteIndex={idx} track={this.props.trackIndex} instrument={this.props.instrument} note={note} compass={i} position={j}/>);
+					keyIdx++;
+				}
+			}
+
+			return <InstrumentHelper key={idx} note={note} keys={keys} />
+		});
 
 		return (
-			<div className="row content-wrapper">
-				{keys}
+			<div className="content-wrapper">
+				{noteTracks}
 			</div>
 		);
 	}
 }	
+
+export class InstrumentHelper extends Component {
+
+	render() {
+		return (
+			<div className="row height-track">
+				<div className="col padding-0375">{this.props.note}</div>
+				<div className="col-11 row">{this.props.keys}</div>
+			</div>
+		);
+	}
+}
