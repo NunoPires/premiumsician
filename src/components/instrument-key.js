@@ -14,6 +14,7 @@ export class InstrumentKey extends Component {
 	componentWillReceiveProps(nextProps) {
 		
 		// TODO trigger attack release is not working properly after instrument change
+		this.state.instrument.dispose();
 		let synth = new Tone.PolySynth(4, nextProps.instrument).toMaster();
 		this.setState({instrument: synth});
 	}

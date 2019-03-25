@@ -12,8 +12,7 @@ export class InstrumentSelector extends Component
 		
 		let options = [
 		    { value: 'piano', label: 'Piano' },
-		    { value: 'guitar', label: 'Guitar' },
-		    { value: 'drums', label: 'Drums' }
+		    { value: 'guitar', label: 'Guitar' }
 		];
 
 		let placeholder = 'Select an option';

@@ -4,8 +4,8 @@ import {Instrument} from './instrument.js';
 
 const Instruments = {
 	'piano': Tone.MembraneSynth,
-	'guitar': Tone.MonoSynth,
-	'drums': Tone.PluckSynth
+	'guitar': Tone.Synth
+	// TODO can't make other synths to work
 }
 
 const mapStateToProps = (state, selfProps) => {	
