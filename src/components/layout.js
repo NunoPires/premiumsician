@@ -24,7 +24,7 @@ export class MainLayout extends Component
 		});
 
 		return (
-			<div className="container">
+			<div className="container-fluid">
 				<div className="btn btn-default add-track-btn" onClick={this.props.onInsertTrack.bind(this)}>Add Track</div>
 				{tracks}	
 			</div>
