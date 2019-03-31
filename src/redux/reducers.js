@@ -1,11 +1,12 @@
 import _ from 'underscore';
-import {ACT_INSTRUMENT_SELECT, ACT_NOTE_SELECT, ACT_TRACK_INSERT} from './actions.js';
+import {ACT_INSTRUMENT_SELECT, ACT_NOTE_SELECT, ACT_TRACK_INSERT, ACT_MODE_SELECT} from './actions.js';
 
 const initialState = {
 
+	magenta: false,
 	tracks: [
-		{
-			instrument: 'piano',
+		{ 
+			instrument: 0,
 			notes: []
 		}
 	]
@@ -62,12 +63,18 @@ export function composerApp(state = initialState, action) {
 				tracks: [
 					...state.tracks,
 					{
-						instrument: 'piano',
+						instrument: 0,
 						notes: []
 					}
 				]
 			});
-			return newState;		
+			return newState;
+
+		case ACT_MODE_SELECT:
+			newState = _.assign({}, state, {
+				magenta: action.value
+			});
+			return newState; 		
 
 		default:
 			return state;

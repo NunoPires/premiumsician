@@ -5,6 +5,7 @@ import {insertTrack} from '../redux/actions.js';
 const mapStateToProps = (state, selfProps) => {
 
 	return {
+		magenta: state.magenta,
 		tracks: state.tracks
 	};
 };

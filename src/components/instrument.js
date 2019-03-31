@@ -7,22 +7,29 @@ export class Instrument extends Component {
 	constructor() {
 		super();
 		
-		let notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
 		// TODO audio stops working if this value increases
-		let maxCompass = 2;
+		let maxCompass = 4;
 		let compassTime = 4; // 4/4		
-		this.state = {notes: notes, maxCompass: maxCompass, compassTime: compassTime};
+		this.state = {maxCompass: maxCompass, compassTime: compassTime};
 	}
 
 	render() {
 
+		let notes = [];
+		if(this.props.magenta) {
+			notes = [60, 62, 64, 65, 67, 69, 71, 72];
+		}
+		else {
+			notes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
+		}
+
 		let keyIdx = 0;
-		let noteTracks = _.map(this.state.notes, (note, idx) => {
+		let noteTracks = _.map(notes, (note, idx) => {
 			
 			let keys = [];
 			for (let i = 1; i <= this.state.maxCompass; i++) {
 				for(let j = 1; j <= this.state.compassTime; j++) {
-					keys.push(<InstrumentKeyContainer key={keyIdx} noteIndex={idx} track={this.props.trackIndex} instrument={this.props.instrument} note={note} compass={i} position={j}/>);
+					keys.push(<InstrumentKeyContainer key={keyIdx} magenta={this.props.magenta} player={this.props.player} noteIndex={idx} track={this.props.trackIndex} instrument={this.props.instrument} note={note} compass={i} position={j}/>);
 					keyIdx++;
 				}
 			}
